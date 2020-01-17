@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Bevásárló lista</title>
+        
+        <style>
+            *
+            {
+                padding: 0px;
+                margin: 0px;
+                margin-left: 10px;
+            }
+            
+            h1
+            {
+                margin-top: 10px;
+                margin-bottom: 50px;    
+            }
+			
+            h2
+			{
+				margin: 50px;
+			}
+			
+            h3
+            {
+                margin: 50px 100px 100px 300px;
+            }
+            
+            #termek_kiiras
+            {
+                padding: 20px;
+            }
+            
+            span
+            {
+                white-space: nowrap;
+            }
+            
+            #kiszereles
+            {
+                font-size: 20px;
+                font-weight: bold;
+            }
+            
+            tr
+            {
+                text-align: center;
+            }
+        </style>
+        
+        <script src='jquery-3.4.1.js'></script>
+        <script>
+            
+            /* LISTÁK */
+            var termekek_tomb = {};
+            termekek_tomb["z_gy"] = ["Banán", "Narancs", "Citrom", "Burgonya", "Paprika"];
+            termekek_tomb["tejt"] = ["Tej", "Vaj", "Sajt", "Tojás"];
+            termekek_tomb["pekaru"] = ["kifli", "Kakaós csiga", "Sajtos Pogácsa"];
+            termekek_tomb["ital"] = ["Coca Cola", "Pepsi", "Fanta"];
+            termekek_tomb["alkohol"] = ["Sör", "Vodka", "Bor"];
+            termekek_tomb["nasi"] = ["Chips", "Milka csoki"];
+            
+            var termekek_tomb_ar = {};
+            termekek_tomb_ar["z_gy_tomb_ar"] = [54, 80, 126, 42, 236];
+			termekek_tomb_ar["tejt_tomb_ar"] = [299, 549, 179, 499];
+            termekek_tomb_ar["pekaru_tomb_ar"] = [59, 99, 105];
+            termekek_tomb_ar["ital_tomb_ar"] = [379, 369, 349];
+            termekek_tomb_ar["alkohol_tomb_ar"] = [279, 2849, 1099];
+            termekek_tomb_ar["nasi_tomb_ar"] = [269, 259];
+			
+			var elso_elem_eltuntetes = false;
+            var aktualis_elem = 0;
+            var aktualis_tomb;
+			var aktualis_ar;
+			var termek_osszege = 0;
+			
+            var termekLista;
+            var termek_termekLista;
+            var termek_aktualis;
+			
+			var szorzo_ertek = 1;
+            var termek_vegosszeg;
+			var kiirando_termek_nev;
+            var kosar_vegosszeg = 0;
+			
+			var kosar_tomb = [];
+            function termekvaltas()
+            {
+				
+                /******* TERMÉKVÁLTÁS ********/
+                termekLista = document.getElementById("termek_kategoria");
+                termek_termekLista = document.getElementById("termek_termek");
+                termek_aktualis = termekLista.options[termekLista.selectedIndex].value;
+				
+				// lista első elemének eltávolítása ( válassz kategóriát! ) + mennyiség + gomb újra használható
+				if(elso_elem_eltuntetes == false)
+				{
+					termekLista.remove(0);
+					elso_elem_eltuntetes = true;
+                    document.getElementById("mennyiseg_input").disabled = false;
+                    document.getElementById("kosarba_gomb").disabled = false;
+				}
+				
+                /* termékek eltávolítása a 2. selectből*/
+
+                while (termek_termekLista.options.length)
+                {
+                    termek_termekLista.remove(0); 
+                }
+
+
+                var termekek = termekek_tomb[termek_aktualis];
+
+                if (termekek)
+                {
+                    var i;
+                    for (i = 0; i < termekek.length; i++)
+                    {
+                      var termek = new Option(termekek[i], i);
+                      termek_termekLista.options.add(termek);
+                    }
+					
+					
+                }
+			
+                /********* KISZERELÉS *********/
+                
+                /*
+                document.getElementById("kiszereles").innerHTML = "Kiszerelés: ";
+                if(termek_aktualis === "alkohol" || termek_aktualis === "tejt" || termek_aktualis === "ital")
+                {
+                    document.getElementById("mertekegyseg").innerHTML = "1,5 Liter";
+                }
+                else if(termek_aktualis === "z_gy")
+                {
+                    document.getElementById("mertekegyseg").innerHTML = "1 KG";
+                }
+                else
+                {
+                    document.getElementById("mertekegyseg").innerHTML = "1 csomag";
+                }
+                */
+				
+                switch(termek_aktualis)
+				{
+					case "z_gy":
+						aktualis_tomb = "z_gy_tomb_ar";
+						break;
+					case "tejt":
+						aktualis_tomb = "tejt_tomb_ar";
+						break;
+					case "pekaru":
+						aktualis_tomb = "pekaru_tomb_ar";
+						break;
+					case "ital":
+						aktualis_tomb = "ital_tomb_ar";
+						break;
+					case "alkohol":
+						aktualis_tomb = "alkohol_tomb_ar";
+						break;
+					case "nasi":
+						aktualis_tomb = "nasi_tomb_ar";
+						break;
+				}
+
+				//vegosszeg = termekek_tomb_ar[aktualis_tomb][0];
+				termek_osszege = termekek_tomb_ar[aktualis_tomb][0];
+                termek_vegosszeg = termek_osszege;
+                
+                document.getElementById("ar_span").innerHTML = "Ár: " + termek_osszege + " Ft";
+				
+				document.getElementById("mennyiseg_input").value = 1;
+                szorzo_ertek = document.getElementById("mennyiseg_input").value;
+				aktualis_elem = termek_termekLista.options[termek_termekLista.selectedIndex].value;
+            }
+			
+			function valasztas()
+			{
+                // kiválasztott elem értékének tárolása
+                aktualis_elem = termek_termekLista.options[termek_termekLista.selectedIndex].value;
+				
+				document.getElementById("mennyiseg_input").value = 1;
+				
+				termek_osszege = termekek_tomb_ar[aktualis_tomb][aktualis_elem];
+				szorzo_ertek = document.getElementById("mennyiseg_input").value;
+                termek_vegosszeg = (termek_osszege*szorzo_ertek);
+				document.getElementById("ar_span").innerHTML = "Ár: " + (termek_osszege*szorzo_ertek) + " Ft";
+				
+			}
+			
+			function mennyiseg_valtas()
+			{
+				termek_osszege = termekek_tomb_ar[aktualis_tomb][aktualis_elem];
+				szorzo_ertek = document.getElementById("mennyiseg_input").value;
+				termek_vegosszeg = (termek_osszege*szorzo_ertek);
+				document.getElementById("ar_span").innerHTML = "Ár: " + termek_vegosszeg + " Ft";
+				
+			}
+			
+			function kosarba()
+			{
+                kiirando_termek_nev = termekek_tomb[termek_aktualis][aktualis_elem];
+                
+                
+                
+                var table, tr, td, found, i, j, k;
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                
+                for(i = 0; i < tr.length; i++)
+                {
+                    td = tr[i].getElementsByTagName("td");
+                    for(j = 0; j < td.length; j++)
+                    {
+                            if(td[j].innerHTML == kiirando_termek_nev)
+                            {
+                                found = true;
+                                if(parseInt(td[j+1].innerHTML)+parseInt(szorzo_ertek) < 100 && parseInt(td[j+1].innerHTML)+parseInt(szorzo_ertek) > 0)
+                                {
+                                    td[j+1].innerHTML = parseInt(td[j+1].innerHTML) + parseInt(szorzo_ertek);
+                                    td[j+2].innerHTML = parseInt(td[j+2].innerHTML) + parseInt(termek_vegosszeg) + " Ft";
+                                    kosar_vegosszeg += parseInt(termek_vegosszeg);
+                                }                             
+                            }
+                    }
+                        
+                 }
+                        
+                if(found != true)
+                {
+                    var row = table.insertRow(1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+					var cell4 = row.insertCell(3);
+                    cell1.innerHTML = kiirando_termek_nev;
+                    cell2.innerHTML = szorzo_ertek;
+                    cell3.innerHTML = termek_vegosszeg + " Ft"; 
+                    kosar_vegosszeg += parseInt(termek_vegosszeg); 
+                }
+                
+                document.getElementById("kosar_vegosszeg_span").innerHTML = kosar_vegosszeg + " Ft";
+                
+				
+				//törlés gomb
+				var x = document.createElement("BUTTON");
+				x.setAttribute("id", "gomb");
+				var t = document.createTextNode("Törlés");
+				x.appendChild(t);
+				cell4.appendChild(x);
+				
+			}
+			
+            $(function()
+            {
+                $(document).on("click", "#gomb", function() {
+                    var torolt_termek_ar = parseInt($(this).closest('tr').children('td:eq(2)').text());
+                    kosar_vegosszeg -= torolt_termek_ar;
+                    document.getElementById("kosar_vegosszeg_span").innerHTML = kosar_vegosszeg + " Ft";
+                    $(this).closest('tr').remove();
+                });
+
+            });
+            
+            
+            
+        </script>
+        
+    </head>
+    
+    <body>
+        <h1>Bevásárló lista</h1>
+        
+        <span id="kiszereles"></span> 
+        <span id="mertekegyseg"></span>
+
+        <select id="termek_kategoria" onchange="termekvaltas()">
+            <option value="valassz">Válassz Kategóriát!</option>
+            <option value="z_gy">Zöldség, Gyümölcs</option>
+            <option value="tejt">Tejtermékek</option>
+            <option value="pekaru">Pékáru</option>
+            <option value="ital">Italok</option>
+            <option value="alkohol">Alkohol</option>
+            <option value="nasi">Harapnivalók</option>
+        </select>
+        
+        <select id="termek_termek" onchange="valasztas()"></select>
+        <input id="mennyiseg_input" maxlength="2" min="1" max="99" size="1" onchange="mennyiseg_valtas()" disabled>
+		<span id="ar_span"></span>
+		
+        
+        <button id="kosarba_gomb" onclick="kosarba()" disabled>kosárba</button>
+		
+        <h2>Kosarad</h2>
+		<div id="bevasarlo_kosar">
+            <table id="myTable" width="500px">
+				<tr>
+					<th>Termék neve 
+					</th>
+					<th>Mennyiség
+					</th>
+					<th>Ár
+					</th>
+				</tr>
+			</table>
+        </div>
+        <h3>Végösszeg: <span id="kosar_vegosszeg_span"> Ft</span></h3>
+    </body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>villogas</title>
+
+<!------------------style------------------>
+        <style>
+        
+        *
+            {
+                padding: 0;
+                margin: 0;  
+            }
+            
+        body
+            {
+                background-image: url(background.jpg);
+                background-size: cover;
+            }
+            
+        .csillag
+            {
+                position: absolute;
+                left: 38%;
+                padding-top: 18%; 
+            }
+            
+        </style>
+        
+<!------------------script----------------->
+        <script type="text/javascript">
+        
+            var loophosszusag = 100;
+            var attunesi_gyorsasag = 60;
+            
+            var attunesek_kulonbsege = attunesi_gyorsasag * 20;
+        
+            
+            var atlatszosag = 1;
+            var eltunik_interval;
+            var visszatunik_interval;
+            var attunes = (attunesek_kulonbsege + attunesi_gyorsasag) * 2;
+            var kesleltetes = attunes;
+            
+            function hozzaad()
+            {
+                
+                if(atlatszosag < 1)
+                    {
+                        atlatszosag += 0.05;
+                    }
+                document.getElementById("kep").style.opacity = atlatszosag;
+            }
+            
+            function elvesz()
+            {
+                if(atlatszosag > 0)
+                    {
+                        atlatszosag -= 0.05;
+                    }
+                document.getElementById("kep").style.opacity = atlatszosag;
+            }
+            
+            function villanas()
+            {
+                    eltunik_interval = setInterval(elvesz, attunesi_gyorsasag);
+                    setTimeout(function()
+                    {
+                        clearInterval(eltunik_interval);
+                        visszatunik_interval = setInterval(hozzaad, attunesi_gyorsasag);
+                    }, attunesek_kulonbsege);
+                    clearInterval(visszatunik_interval);
+            }
+            
+            function villogas()
+            {
+                villanas();
+                for(i=0;i<loophosszusag;i++)
+                    {
+                        setTimeout(function()
+                        {
+                            villanas();
+                        }, kesleltetes);
+                        kesleltetes += attunes;
+                    }
+
+            }
+            
+        </script>
+        
+	</head>
+    
+	<body onload="villogas()">
+        
+        <div class="csillag">
+            <img id="kep" src="csillag.png" height="200px">
+        </div>
+        
+	</body>
+</html>

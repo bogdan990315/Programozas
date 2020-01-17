@@ -1,0 +1,158 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<title>Rendezvény</title>
+		<script>	
+		
+			var maxhely = 0;
+			var ferohely = 0;
+			var ferfi = 0;
+			var no = 0;
+			var osszes = 0;
+			
+			function szamolas(aktualis)
+			{
+				var aktualisId = aktualis.id;
+				
+				switch(aktualisId)
+				{
+					case "0":
+						if(osszes < maxhely)
+						{
+							ferohely--;
+							ferfi++;
+							osszes++;
+							document.getElementById("ferohely_szamlalo").innerHTML = ferohely;
+							document.getElementById("ferfiSzam").innerHTML = ferfi;
+							document.getElementById("osszesSzam").innerHTML = osszes;
+						}
+						if(osszes == maxhely)
+						{
+							alert("A rendezvény betelt!");
+						}
+						break;
+					case "1":
+						if(osszes < maxhely)
+						{
+							ferohely--;
+							no++;
+							osszes++;
+							document.getElementById("ferohely_szamlalo").innerHTML = ferohely;
+							document.getElementById("noSzam").innerHTML = no;
+							document.getElementById("osszesSzam").innerHTML = osszes;
+						}
+						if(osszes == maxhely)
+						{
+							alert("A rendezvény betelt!");
+						}
+						break;
+					case "2":
+						if(ferfi >= 1 && osszes >= 1)
+						{
+							ferohely++;
+							ferfi--;
+							osszes--;
+						}
+						document.getElementById("ferohely_szamlalo").innerHTML = ferohely;
+						document.getElementById("ferfiSzam").innerHTML = ferfi;
+						document.getElementById("osszesSzam").innerHTML = osszes;
+						break;
+					case "3":
+						if(no >= 1 && osszes >= 1)
+						{
+							ferohely++;
+							no--;
+							osszes--;
+						}
+						document.getElementById("ferohely_szamlalo").innerHTML = ferohely;
+						document.getElementById("noSzam").innerHTML = no;
+						document.getElementById("osszesSzam").innerHTML = osszes;
+						break;
+				}
+			}
+			
+			
+			
+			function ferohelyRogzit()
+			{
+				maxhely = parseInt(document.getElementById('osszHelyInput').value, 10);
+				ferohely = maxhely;
+				var helyes = (isFinite(maxhely)) ? "" : alert("Nem értelmezhető számot adott meg!");
+				document.getElementById('osszHelyInput').disabled = true;
+				document.getElementById('ferohely_szamlalo').innerHTML = maxhely;
+			}
+			
+			function reset()
+			{
+				maxhely = 0;
+				ferfi = 0;
+				no = 0;
+				osszes = 0;
+				document.getElementById('osszHelyInput').disabled = false;
+				document.getElementById('osszHelyInput').value = maxhely;
+				document.getElementById('ferohely_szamlalo').innerHTML = maxhely;
+				document.getElementById("ferfiSzam").innerHTML = 0;
+				document.getElementById("noSzam").innerHTML = 0;
+				document.getElementById("osszesSzam").innerHTML = 0;
+			}
+			
+		</script>
+		
+	</head>
+	
+	<body>
+		<div class="szamlaloDiv">
+			<div class="jottDiv">
+				<h2>Jött</h2>
+				</br>
+				</br>
+				<button id="0" onclick="szamolas(this)">Férfi</button>
+				<button id="1" onclick="szamolas(this)">Nő</button>
+			</div>
+			
+			<div class="osszesDiv">
+				<h1>Összes Résztvető</h1>
+				</br>
+				</br>
+				<p id="osszesSzam">0</p>
+			</div>
+			
+			<div class="mentDiv">
+				<h2>Ment</h2>
+				</br>
+				</br>
+				<button id="2" onclick="szamolas(this)">Férfi</button>
+				<button id="3" onclick="szamolas(this)">Nő</button>
+			</div>
+	
+			</br>
+
+			<div class="szamlalok">
+				<h3>Férfi</h3>
+				<h3>Nő</h3>
+				</br>
+				<p id="ferfiSzam">0</p>
+				<p id="noSzam">0</p>
+			</div>
+			
+		</div>
+
+		<div class="ferohely_div">
+			<p>Adja meg a rendezvény maximális férőhelyeinek számát!</p>
+			</br>
+			<input type="text" id="osszHelyInput" size="20" value="" />
+			<button id="rogzites" onclick="ferohelyRogzit()">Rögzít</button>
+			<button id="rogzites" onclick="reset()">Reset</button>
+		</div>
+		
+		<div class="megmaradtHelyek">
+			<p id="maradtferohely">Megmaradt férőhelyek:</p>
+			</br>
+			</br>
+			<p id="ferohely_szamlalo">0</p>
+		</div>
+		
+	</body>
+
+</html>

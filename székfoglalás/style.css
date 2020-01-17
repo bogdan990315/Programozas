@@ -1,0 +1,30 @@
+*
+{
+	margin: 0;
+	padding: 0;
+}
+
+.menufent
+{
+	text-align: center;
+	position: fixed;
+	padding: 15px;
+	top: 0px;
+	left: 8px;
+	right: 8px;
+	list-style: none;
+	z-index: 99999;
+	opacity: 1.0;
+	background-color: #E7F2F9;
+	height: 20px;
+}
+
+.gomb
+{
+	padding: 2px 10px;
+}
+
+.szekekhtml
+{
+	text-align: center;
+}

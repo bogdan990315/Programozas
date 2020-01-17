@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<title>Székek</title>
+		
+		<script type="text/javascript" src="script.js"></script>
+	</head>
+	
+	<body>
+		<!-- Weblap törzse -->
+		<div class="menufent">
+			<input class="gomb" type="button" onclick="foglal();" value="Foglalás" />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input class="gomb" type="button" onclick="torol();" value="Foglalás törlése" />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input class="gomb"type="button" onclick="vissza();" value="Visszaállít" />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span id="tele" class="foglalt"></span>
+		</div>
+		
+		<br />
+		<br />
+		<div class="szekekhtml">
+			<script type="text/javascript">
+				for( j = 1 ; j <= db; j += 4)
+				{
+					document.write('<br />');
+					for( i = j; i < j+4; i+=1)
+					{
+						document.write('<img src="kepek/szekszabad.png" height="100px" width="100px" id="kep' + (i-1) + '" title="sor: ' + Math.ceil(j/4) + ' oszlop: ' + ((i-1)%4+1) + ' szám: ' + i + '" onclick="kijelol(this);" /> &nbsp;&nbsp;&nbsp;&nbsp;');
+					}
+				}
+			</script>
+		</div>
+	</body>
+
+</html>

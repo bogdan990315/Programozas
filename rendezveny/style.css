@@ -1,0 +1,60 @@
+*
+{
+	padding: 0;
+	margin: 0;
+	float: left;
+}
+
+button
+{
+	margin-top: 20px;
+	padding: 5px 20px;
+}
+
+.szamlalok
+{
+	padding-top: 20px;
+}
+
+div
+{
+	margin: 20px;
+}
+
+h3
+{
+	padding-right: 420px;
+}
+
+#ferfiSzam, #noSzam
+{
+	font-size: 60px;
+}
+
+#ferfiSzam
+{
+	
+	padding-right: 425px;
+}
+
+#osszesSzam
+{
+	font-size: 100px;
+}
+
+#osszesSzam
+{
+	margin-left: 60px;
+}
+
+input
+{
+	margin-top: 25px;
+	margin-right: 10px;
+}
+
+#ferohely_szamlalo
+{
+	font-size: 50px;
+	margin-left: 70px;
+}
