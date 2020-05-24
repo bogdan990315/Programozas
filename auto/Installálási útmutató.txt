@@ -1,0 +1,7 @@
+Fontos! Rendelkeznünk kell egy otthoni szervert szimuláló programmal (pl. Xampp, Wampp)
+0. Indítsuk el a xampp/wampp-ot, azon belül is az Apache és MySQL szolgáltatásokat.
+
+1. Nyissuk meg a "createTables.php"-t, ezzel elkészítjük az adatbázis szerkezetét.
+2. Az oldal felajánlja, hogy próba adatokkal feltöltse az imént létrehozott adatbázist. Kattintsunk rá.
+3. Ha feltöltöttük az adatbázist, a program további lehetőséget nyújt arra, hogy áttérjünk a programra.
+4. Használjuk a programot kedvünk szerint!
